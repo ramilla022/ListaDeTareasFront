@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Button, Container, TextField, Typography, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext'; 
@@ -7,8 +7,10 @@ export default function LoginPage() {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth(); 
+  const { login, user } = useAuth(); 
   const navigate = useNavigate();
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +28,12 @@ export default function LoginPage() {
       setError('Las credenciales son incorrectas');
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   return (
   <Container

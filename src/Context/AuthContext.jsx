@@ -10,11 +10,16 @@ import {
 const API_URL = import.meta.env.VITE_PORT;
 
 const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
 
+   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUsuario(JSON.parse(storedUser));
+    }
+  }, []);
 
   const register = async ({ email, password, nombre }) => {
     try {
@@ -42,6 +47,7 @@ export const AuthProvider = ({ children }) => {
         email: user.email,
         nombre: user.displayName || null,
       });
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       throw new Error(error.message);
@@ -52,6 +58,8 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await signOut(auth);
     setUsuario(null);
+    localStorage.removeItem("user");
+
   };
 
 

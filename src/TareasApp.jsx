@@ -1,17 +1,33 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from './UI/Navbar';
 import TareasPage from './Tareas/Pages/TareasPage';
 import LoginPage from "./Tareas/Pages/LoginPage";
 import RegisterPage from "./Tareas/Pages/RegisterPage";
 
+import { useAuth } from "./Context/AuthContext"; 
+import CrearTarea from "./Tareas/Pages/crearTarea";
+
 function App() {
+  const { usuario } = useAuth();
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<TareasPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={
+          usuario ? <TareasPage /> : <Navigate to="/login" replace />
+        } />
+         <Route path="/crearTarea" element={
+          usuario ? <CrearTarea /> : <Navigate to="/login" replace />
+        } />
+
+        <Route path="/login" element={
+          !usuario ? <LoginPage /> : <Navigate to="/" replace />
+        } />
+
+        <Route path="/register" element={
+          !usuario ? <RegisterPage /> : <Navigate to="/" replace />
+        } />
       </Routes>
     </>
   );
