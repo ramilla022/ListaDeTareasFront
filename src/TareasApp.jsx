@@ -15,10 +15,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={
-          usuario ? <TareasPage /> : <Navigate to="/login" replace />
+          usuario ? <TareasPage estadoFiltro="Pendiente" /> : <Navigate to="/login" replace />
         } />
          <Route path="/crearTarea" element={
           usuario ? <CrearTarea /> : <Navigate to="/login" replace />
+        } />
+        <Route path="/Completadas" element={
+          usuario ? <TareasPage estadoFiltro="Completada" /> : <Navigate to="/login" replace />
         } />
 
         <Route path="/login" element={

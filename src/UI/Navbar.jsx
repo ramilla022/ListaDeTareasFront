@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import CategoryIcon from '@mui/icons-material/Category';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
@@ -34,9 +33,6 @@ export default function Navbar() {
           </Button>
           <Button color="inherit" startIcon={<DoneAllIcon />} component={NavLink} to="/completadas">
             Tareas Completadas
-          </Button>
-          <Button color="inherit" startIcon={<CategoryIcon />} component={NavLink} to="/tipo">
-            Tareas por Tipo
           </Button>
           <Button color="inherit" startIcon={<LogoutIcon />} onClick={handleLogout}>
             Cerrar Sesión

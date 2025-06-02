@@ -60,7 +60,7 @@ export default function CrearTarea() {
             label="Descripción"
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
-            inputProps={{ maxLength: 40 }}
+            inputProps={{ maxLength: 100 }}
             helperText={`${descripcion.length}/100`}
             required
             margin="normal"
@@ -79,6 +79,7 @@ export default function CrearTarea() {
         >
           <MenuItem value="Hogar">Hogar</MenuItem>
           <MenuItem value="Trabajo">Trabajo</MenuItem>
+          <MenuItem value="Estudio">Estudio</MenuItem>
           <MenuItem value="Varias">Varias</MenuItem>
         </TextField>
 
