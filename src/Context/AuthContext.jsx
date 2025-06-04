@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 const API_URL = import.meta.env.VITE_PORT;
 
@@ -9,13 +10,34 @@ export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUsuario(JSON.parse(storedUser));
+
+
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  const token = localStorage.getItem("token");
+
+  if (storedUser && token) {
+    try {
+      const decoded = jwtDecode(token);
+      const isExpired = decoded.exp * 1000 < Date.now();
+
+      if (isExpired) {
+        setUsuario(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      } else {
+        setUsuario(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error("Token inválido:", error);
+      setUsuario(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
-    setLoading(false);
-  }, []);
+  }
+
+  setLoading(false);
+}, []);
 
   const register = async ({ email, password, nombre }) => {
     try {
