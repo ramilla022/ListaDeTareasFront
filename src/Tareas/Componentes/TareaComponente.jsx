@@ -1,5 +1,5 @@
-import { Paper, ListItemText, IconButton, Stack } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit'
+import { Paper, Stack, Typography, IconButton, Box } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from 'react-router-dom';
@@ -11,51 +11,69 @@ export default function TareaComponente({ tarea, onEliminar, onCompletar }) {
 
   return (
     <Paper
-      elevation={2}
-      sx={{
-        p: 2,
-        mb: 2,
-        backgroundColor: estaCompletada ? '#f0f0f0' : 'white',
-        borderLeft: estaCompletada ? '6px solid green' : '6px solid transparent',
-        transition: 'all 0.3s ease-in-out',
-      }}
-    >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <ListItemText
-          primary={tarea.descripcion || tarea.texto}
+    elevation={2}
+    style={{
+    width: '300px',
+    minHeight: '150px',
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  }}
+>
+      <Stack spacing={1}>
+        <Typography
+          variant="subtitle1"
           sx={{
             textDecoration: estaCompletada ? 'line-through' : 'none',
             color: estaCompletada ? 'gray' : 'text.primary',
+            fontWeight: '600',
           }}
-        />
-        <div>
-          <IconButton
-            aria-label="completar"
-            onClick={() => onCompletar(tarea.id)}
-            color={estaCompletada ? "default" : "success"}
-          >
-            <CheckCircleIcon />
-          </IconButton>
+        >
+          {tarea.descripcion || tarea.texto}
+        </Typography>
 
-  
-          <IconButton
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          <Typography variant="caption" color="text.secondary">
+            Tipo: {tarea.tipo || 'N/A'}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Fecha: {tarea.fechaCreacion?.slice(0, 10) || 'N/A'}
+          </Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold' }}>
+            Estado: {tarea.estado}
+          </Typography>
+        </Box>
+      </Stack>
+
+      <Stack direction="row" justifyContent="flex-end" spacing={1} sx={{ mt: 2 }}>
+        <IconButton
+          aria-label="completar"
+          onClick={() => onCompletar(tarea.id)}
+          color={estaCompletada ? 'default' : 'success'}
+          size="small"
+        >
+          <CheckCircleIcon />
+        </IconButton>
+
+        <IconButton
           aria-label="editar"
           onClick={() => navigate(`/modificar/${tarea.id}`, { state: { tarea } })}
           color="primary"
           disabled={estaCompletada}
-          >
-
-
+          size="small"
+        >
           <EditIcon />
         </IconButton>
-          <IconButton
-            aria-label="eliminar"
-            onClick={() => onEliminar(tarea.id)}
-            color="error"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </div>
+
+        <IconButton
+          aria-label="eliminar"
+          onClick={() => onEliminar(tarea.id)}
+          color="error"
+          size="small"
+        >
+          <DeleteIcon />
+        </IconButton>
       </Stack>
     </Paper>
   );
