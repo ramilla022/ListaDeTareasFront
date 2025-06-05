@@ -1,9 +1,12 @@
 import { Paper, ListItemText, IconButton, Stack } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useNavigate } from 'react-router-dom';
 
 export default function TareaComponente({ tarea, onEliminar, onCompletar }) {
 
+  const navigate = useNavigate();
   const estaCompletada = tarea.estado === 'Completada';
 
   return (
@@ -33,6 +36,18 @@ export default function TareaComponente({ tarea, onEliminar, onCompletar }) {
           >
             <CheckCircleIcon />
           </IconButton>
+
+  
+          <IconButton
+          aria-label="editar"
+          onClick={() => navigate(`/modificar/${tarea.id}`, { state: { tarea } })}
+          color="primary"
+          disabled={estaCompletada}
+          >
+
+
+          <EditIcon />
+        </IconButton>
           <IconButton
             aria-label="eliminar"
             onClick={() => onEliminar(tarea.id)}

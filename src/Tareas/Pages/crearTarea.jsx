@@ -3,12 +3,14 @@ import { Container, Typography, TextField, MenuItem, Button, Box } from '@mui/ma
 import { useAuth } from '../../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import FormularioTarea from '../Componentes/FormTarea';
+import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;
 
 export default function CrearTarea() {
   const { usuario } = useAuth();
-
+ const { agregarTarea } = useTareas()
   const [descripcion, setDescripcion] = useState('');
   const [tipo, setTipo] = useState('Hogar');
   const navigate = useNavigate();
@@ -34,8 +36,7 @@ export default function CrearTarea() {
 
   try {
     const response = await axios.post(`${API_URL}/api/tarea/crear`, nuevaTarea);
-
-    console.log('Tarea creada:', response.data);
+    agregarTarea(response.data)
 
     setDescripcion('');
     setTipo('Hogar');
@@ -53,56 +54,16 @@ export default function CrearTarea() {
       <Typography variant="h4" gutterBottom>
         Crear Nueva Tarea
       </Typography>
-
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-        <TextField
-            fullWidth
-            label="Descripción"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            inputProps={{ maxLength: 100 }}
-            helperText={`${descripcion.length}/100`}
-            required
-            margin="normal"
-            multiline     
-            sx={{ 
-            textarea: { resize: 'vertical' }  
-        }}/>
-
-        <TextField
-          select
-          fullWidth
-          label="Tipo"
-          value={tipo}
-          onChange={(e) => setTipo(e.target.value)}
-          margin="normal"
-        >
-          <MenuItem value="Hogar">Hogar</MenuItem>
-          <MenuItem value="Trabajo">Trabajo</MenuItem>
-          <MenuItem value="Estudio">Estudio</MenuItem>
-          <MenuItem value="Varias">Varias</MenuItem>
-        </TextField>
-
-        <TextField
-          label="Estado"
-          fullWidth
-          value={estado}
-          margin="normal"
-          InputProps={{
-            readOnly: true,
-          }}
+      <Box component="form" onSubmit={handleSubmit} noValidate>
+        <FormularioTarea
+          descripcion={descripcion}
+          setDescripcion={setDescripcion}
+          tipo={tipo}
+          setTipo={setTipo}
+          estado={estado}
+          fechaCreacion={fechaCreacion}
+          handleSubmit={handleSubmit}
         />
-
-        <TextField
-          label="Fecha de creación"
-          fullWidth
-          value={fechaCreacion}
-          margin="normal"
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-
         <Button
           type="submit"
           variant="contained"
@@ -112,7 +73,7 @@ export default function CrearTarea() {
         >
           Crear Tarea
         </Button>
-      </Box>
+        </Box>
     </Container>
   );
 }
