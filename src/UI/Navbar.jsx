@@ -34,6 +34,9 @@ export default function Navbar() {
           <Button color="inherit" startIcon={<DoneAllIcon />} component={NavLink} to="/completadas">
             Tareas Completadas
           </Button>
+          <Button color="inherit" startIcon={<ChecklistIcon />} component={NavLink} to="/historialTareas">
+            Historial de tareas
+          </Button>
           <Button color="inherit" startIcon={<LogoutIcon />} onClick={handleLogout}>
             Cerrar Sesión
           </Button>

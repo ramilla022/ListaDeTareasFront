@@ -9,13 +9,22 @@ const TareasContext = createContext();
 export function TareasProvider({ children }) {
   const { usuario } = useAuth();
   const [tareas, setTareas] = useState([]);
+  const [historial, setHistorial] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!usuario?.uid) {
       setTareas([]);
+      setHistorial([]);
       setLoading(false);
       return;
+    }
+
+    const historialLocal = localStorage.getItem(`historial_${usuario.uid}`);
+    if (historialLocal) {
+      setHistorial(JSON.parse(historialLocal));
+    } else {
+      setHistorial([]);
     }
 
     axios
@@ -30,8 +39,25 @@ export function TareasProvider({ children }) {
       });
   }, [usuario]);
 
+  useEffect(() => {
+    if (usuario?.uid) {
+      localStorage.setItem(`historial_${usuario.uid}`, JSON.stringify(historial));
+    }
+  }, [historial, usuario]);
+
+  const agregarEventoHistorial = (descripcion) => {
+    setHistorial((prev) => [
+      ...prev,
+      {
+        descripcion,
+        fecha: new Date().toISOString(),
+      },
+    ]);
+  };
+
   const agregarTarea = (tareaNueva) => {
     setTareas((prev) => [...prev, tareaNueva]);
+    agregarEventoHistorial(`Tarea creada: "${tareaNueva.descripcion}"`);
   };
 
   const actualizarTarea = (tareaActualizada) => {
@@ -41,12 +67,26 @@ export function TareasProvider({ children }) {
   };
 
   const eliminarTarea = (id) => {
+    const tareaEliminada = tareas.find((t) => t.id === id);
     setTareas((prev) => prev.filter((t) => t.id !== id));
+    if (tareaEliminada) {
+      agregarEventoHistorial(`Tarea eliminada: "${tareaEliminada.descripcion}"`);
+    }
   };
 
   return (
     <TareasContext.Provider
-      value={{ tareas, setTareas, loading, agregarTarea, actualizarTarea, eliminarTarea }}
+      value={{
+        tareas,
+        setTareas,
+        historial,
+        agregarEventoHistorial,
+        setHistorial,
+        loading,
+        agregarTarea,
+        actualizarTarea,
+        eliminarTarea,
+      }}
     >
       {children}
     </TareasContext.Provider>

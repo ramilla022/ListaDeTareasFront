@@ -7,6 +7,7 @@ import RegisterPage from "./Tareas/Pages/RegisterPage";
 import { useAuth } from "./Context/AuthContext"; 
 import CrearTarea from "./Tareas/Pages/crearTarea";
 import ModificarTarea from "./Tareas/Pages/ModificarTarea";
+import HistorialTareas from './Tareas/Pages/HistorialTareas'
 
 function App() {
   const { usuario } = useAuth();
@@ -17,6 +18,9 @@ function App() {
       <Routes>
         <Route path="/" element={
           usuario ? <TareasPage estadoFiltro="Pendiente" /> : <Navigate to="/login" replace />
+        } />
+         <Route path="/historialTareas" element={
+          usuario ? <HistorialTareas /> : <Navigate to="/login" replace />
         } />
          <Route path="/crearTarea" element={
           usuario ? <CrearTarea /> : <Navigate to="/login" replace />

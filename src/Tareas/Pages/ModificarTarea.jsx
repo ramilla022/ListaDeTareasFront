@@ -11,7 +11,7 @@ export default function ModificarTarea() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { actualizarTarea } = useTareas();
+  const { actualizarTarea, agregarEventoHistorial } = useTareas();
 
   const tarea = state?.tarea;
 
@@ -38,6 +38,8 @@ export default function ModificarTarea() {
     try {
       await axios.put(`${API_URL}/api/tarea/modificar/${id}`, tareaActualizada);
        actualizarTarea({ id, ...tareaActualizada });
+       agregarEventoHistorial(`Tarea modificada: "${tareaActualizada.descripcion}"`);
+
       navigate('/');
     } catch (error) {
       console.error('Error al actualizar tarea:', error);

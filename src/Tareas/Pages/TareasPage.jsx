@@ -23,7 +23,7 @@ const API_URL = import.meta.env.VITE_PORT;
 export default function TareasPage({ estadoFiltro = 'Pendiente' }) {
   const [filtroTipo, setFiltroTipo] = useState('');
 const [filtroFecha, setFiltroFecha] = useState('');
-  const { tareas, loading, actualizarTarea, eliminarTarea } = useTareas();
+  const { tareas, loading, actualizarTarea, eliminarTarea, agregarEventoHistorial } = useTareas();
   const navigate = useNavigate();
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -65,6 +65,8 @@ const [filtroFecha, setFiltroFecha] = useState('');
       await axios.put(`${API_URL}/api/tarea/modificar/${id}`, tareaActualizada);
 
       actualizarTarea(tareaActualizada);
+      agregarEventoHistorial(`La tarea "${tareaActual.descripcion}" cambió a estado "${nuevoEstado}"`);
+
     } catch (error) {
       console.error('Error al completar tarea:', error);
       alert('Error al actualizar el estado de la tarea');
