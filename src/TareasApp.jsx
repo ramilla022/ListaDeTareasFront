@@ -3,7 +3,7 @@ import Navbar from './UI/Navbar';
 import TareasPage from './Tareas/Pages/TareasPage';
 import LoginPage from "./Tareas/Pages/LoginPage";
 import RegisterPage from "./Tareas/Pages/RegisterPage";
-
+import './Tareas.css'
 import { useAuth } from "./Context/AuthContext"; 
 import CrearTarea from "./Tareas/Pages/crearTarea";
 import ModificarTarea from "./Tareas/Pages/ModificarTarea";
@@ -13,16 +13,16 @@ function App() {
   const { usuario } = useAuth();
 
   return (
-    <>
+    <div className="app-container">
       <Navbar />
       <Routes>
         <Route path="/" element={
           usuario ? <TareasPage estadoFiltro="Pendiente" /> : <Navigate to="/login" replace />
         } />
-         <Route path="/historialTareas" element={
+        <Route path="/historialTareas" element={
           usuario ? <HistorialTareas /> : <Navigate to="/login" replace />
         } />
-         <Route path="/crearTarea" element={
+        <Route path="/crearTarea" element={
           usuario ? <CrearTarea /> : <Navigate to="/login" replace />
         } />
         <Route path="/Completadas" element={
@@ -31,7 +31,6 @@ function App() {
         <Route path="/modificar/:id" element={
           usuario ? <ModificarTarea /> : <Navigate to="/login" replace />
         } />
-       
 
         <Route path="/login" element={
           !usuario ? <LoginPage /> : <Navigate to="/" replace />
@@ -41,7 +40,7 @@ function App() {
           !usuario ? <RegisterPage /> : <Navigate to="/" replace />
         } />
       </Routes>
-    </>
+    </div>
   );
 }
 
