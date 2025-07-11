@@ -92,14 +92,6 @@ if (loading) {
   );
 }
 
-  if (loading) {
-    return (
-      <Container maxWidth="sm" sx={{ mt: 5, textAlign: 'center' }}>
-        <CircularProgress />
-      </Container>
-    );
-  }
-
   return (
   <Container maxWidth="lg" sx={{ position: 'relative', mt: 5 }}>
     <Paper elevation={3} sx={{ p: 4 }}>

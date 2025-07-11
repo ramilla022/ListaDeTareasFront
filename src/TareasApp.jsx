@@ -5,7 +5,7 @@ import LoginPage from "./Tareas/Pages/LoginPage";
 import RegisterPage from "./Tareas/Pages/RegisterPage";
 import './Tareas.css'
 import { useAuth } from "./Context/AuthContext"; 
-import CrearTarea from "./Tareas/Pages/crearTarea";
+import CrearTarea from "./Tareas/Pages/CrearTarea";
 import ModificarTarea from "./Tareas/Pages/ModificarTarea";
 import HistorialTareas from './Tareas/Pages/HistorialTareas'
 
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar />
+      {usuario && <Navbar />}
       <Routes>
         <Route path="/" element={
           usuario ? <TareasPage estadoFiltro="Pendiente" /> : <Navigate to="/login" replace />

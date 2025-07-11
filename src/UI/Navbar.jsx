@@ -11,10 +11,8 @@ import { useAuth } from '../Context/AuthContext';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 export default function Navbar() {
-  const { usuario, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
-
-  if (!usuario) return null;
 
   const handleLogout = () => {
     logout();
