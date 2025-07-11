@@ -8,7 +8,7 @@ import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;
 
-export default function CrearTarea() {
+export const CrearTarea = () => {
   const { usuario } = useAuth();
  const { agregarTarea } = useTareas()
   const [descripcion, setDescripcion] = useState('');

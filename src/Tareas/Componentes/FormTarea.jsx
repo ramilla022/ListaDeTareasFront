@@ -1,11 +1,11 @@
 import { Box, TextField, MenuItem } from "@mui/material";
 
-export default function FormularioTarea({
+export const FormularioTarea = ({
   descripcion,
   setDescripcion,
   tipo,
   setTipo,
-}) {
+}) => {
   return (
     <Box noValidate sx={{ mt: 2 }}>
       <TextField

@@ -3,7 +3,7 @@ import { Box, Button, Container, TextField, Typography, Paper } from '@mui/mater
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 
-export default function RegisterPage() {
+export const RegisterPage = () => {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from 'react-router-dom';
 
-export default function TareaComponente({ tarea, onEliminar, onCompletar }) {
+export const TareaComponente = ({ tarea, onEliminar, onCompletar }) => {
 
   const navigate = useNavigate();
   const estaCompletada = tarea.estado === 'Completada';

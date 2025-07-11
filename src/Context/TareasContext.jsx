@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_PORT;
 
 const TareasContext = createContext();
 
-export function TareasProvider({ children }) {
+export const TareasProvider = ({ children }) => {
   const { usuario } = useAuth();
   const [tareas, setTareas] = useState([]);
   const [historial, setHistorial] = useState([]);

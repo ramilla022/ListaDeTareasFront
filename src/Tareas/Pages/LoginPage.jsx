@@ -3,7 +3,7 @@ import { Box, Button, Container, TextField, Typography, Paper } from '@mui/mater
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext'; 
 
-export default function LoginPage() {
+export const LoginPage = () => {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

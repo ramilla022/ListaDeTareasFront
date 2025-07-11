@@ -20,7 +20,7 @@ import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;
 
-export default function TareasPage({ estadoFiltro = 'Pendiente' }) {
+export const TareasPage = ({ estadoFiltro = 'Pendiente' }) => {
   const [filtroTipo, setFiltroTipo] = useState('');
 const [filtroFecha, setFiltroFecha] = useState('');
   const { tareas, loading, actualizarTarea, eliminarTarea, agregarEventoHistorial } = useTareas();

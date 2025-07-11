@@ -7,7 +7,7 @@ import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;
 
-export default function ModificarTarea() {
+export const ModificarTarea = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
