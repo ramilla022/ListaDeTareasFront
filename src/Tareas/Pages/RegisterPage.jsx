@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [registroExitoso, setRegistroExitoso] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -28,7 +29,11 @@ export default function RegisterPage() {
 
     if (Object.keys(newErrors).length === 0) {
       register({ nombre, email, password });
+      setRegistroExitoso(true);
+
+      setTimeout(() => {
       navigate('/login');
+    }, 2000);
     }
   };
 
@@ -90,6 +95,11 @@ export default function RegisterPage() {
           error={Boolean(errors.confirmarPassword)}
           helperText={errors.confirmarPassword}
         />
+        {registroExitoso && (
+          <Typography variant="body1" sx={{ color: 'green', mb: 2 }}>
+            Registro exitoso. Redirigiendo al login...
+          </Typography>
+)}
         <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
           Crear Cuenta
         </Button>

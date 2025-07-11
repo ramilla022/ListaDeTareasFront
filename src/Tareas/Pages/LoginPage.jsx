@@ -21,6 +21,16 @@ export default function LoginPage() {
       return;
     }
 
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      setError('Email inválido') 
+      return
+    }
+
+    if (password.length < 6) {
+      setError('Por favor ingrese una contraseña de mas de 6 caracteres')
+      return
+    }
+
     try {
       await login({ email: correo, password }); 
       navigate('/'); 

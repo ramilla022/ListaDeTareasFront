@@ -19,12 +19,13 @@ export default function ModificarTarea() {
   const [tipo, setTipo] = useState(tarea?.tipo || 'Hogar');
   const [estado, setEstado] = useState(tarea?.estado || 'Pendiente');
   const [fechaCreacion, setFechaCreacion] = useState(tarea?.fechaCreacion || '');
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (descripcion.trim() === '') {
-      alert('La descripción es requerida');
+      setError('La descripción es requerida');
       return;
     }
 
@@ -43,7 +44,6 @@ export default function ModificarTarea() {
       navigate('/');
     } catch (error) {
       console.error('Error al actualizar tarea:', error);
-      alert('No se pudo actualizar la tarea');
     }
   };
 
@@ -74,6 +74,13 @@ export default function ModificarTarea() {
           estado={estado}
           fechaCreacion={fechaCreacion}
         />
+
+        {error && (
+            <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+              {error}
+            </Typography>
+        )}
+
         <Button type="submit" variant="contained" color="primary" sx={{ mt: 3 }} fullWidth>
           Guardar Cambios
         </Button>

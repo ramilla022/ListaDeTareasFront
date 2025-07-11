@@ -5,8 +5,6 @@ export default function FormularioTarea({
   setDescripcion,
   tipo,
   setTipo,
-  estado,
-  fechaCreacion,
 }) {
   return (
     <Box noValidate sx={{ mt: 2 }}>
@@ -38,26 +36,6 @@ export default function FormularioTarea({
         <MenuItem value="Estudio">Estudio</MenuItem>
         <MenuItem value="Varias">Varias</MenuItem>
       </TextField>
-
-      <TextField
-        label="Estado"
-        fullWidth
-        value={estado}
-        margin="normal"
-        InputProps={{
-          readOnly: true,
-        }}
-      />
-
-      <TextField
-        label="Fecha de creación"
-        fullWidth
-        value={fechaCreacion}
-        margin="normal"
-        InputProps={{
-          readOnly: true,
-        }}
-      />
     </Box>
   );
 }

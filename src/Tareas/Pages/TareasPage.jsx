@@ -45,7 +45,6 @@ const [filtroFecha, setFiltroFecha] = useState('');
       eliminarTarea(tareaSeleccionada.id);
     } catch (error) {
       console.error('Error al eliminar tarea:', error);
-      alert('Error al eliminar la tarea');
     }
     cancelarEliminar();
   };
@@ -69,7 +68,6 @@ const [filtroFecha, setFiltroFecha] = useState('');
 
     } catch (error) {
       console.error('Error al completar tarea:', error);
-      alert('Error al actualizar el estado de la tarea');
     }
   };
 

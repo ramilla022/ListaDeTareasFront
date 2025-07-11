@@ -13,6 +13,7 @@ export default function CrearTarea() {
  const { agregarTarea } = useTareas()
   const [descripcion, setDescripcion] = useState('');
   const [tipo, setTipo] = useState('Hogar');
+  const [error, setError] = useState('')
   const navigate = useNavigate();
 
   const fechaCreacion = new Date().toISOString().slice(0, 10);
@@ -22,7 +23,7 @@ export default function CrearTarea() {
   e.preventDefault();
 
   if (descripcion.trim().length === 0) {
-    alert('La descripción es requerida');
+    setError('La descripción es requerida');
     return;
   }
 
@@ -45,8 +46,7 @@ export default function CrearTarea() {
 
   } catch (error) {
     console.error('Error al crear tarea:', error);
-    alert('Error al crear la tarea, intenta de nuevo');
-  }
+    }
 };
 
   return (
@@ -64,6 +64,11 @@ export default function CrearTarea() {
           fechaCreacion={fechaCreacion}
           handleSubmit={handleSubmit}
         />
+         {error && (
+            <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+              {error}
+            </Typography>
+          )}
         <Button
           type="submit"
           variant="contained"
