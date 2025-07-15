@@ -4,8 +4,7 @@ import {TareasPage} from './Tareas/Pages/TareasPage';
 import {LoginPage} from "./Tareas/Pages/LoginPage";
 import {RegisterPage} from "./Tareas/Pages/RegisterPage";
 import './Tareas.css'
-import {CrearTarea} from "./Tareas/Pages/CrearTarea";
-import {ModificarTarea} from "./Tareas/Pages/ModificarTarea";
+import { CrearModificarTarea } from './Tareas/Pages/CrearModificarTarea'
 import HistorialTareas from './Tareas/Pages/HistorialTareas';
 import RutaPrivada from "./Routes/RutaPrivada";
 import RutaPublica from "./Routes/RutaPublica";
@@ -25,14 +24,15 @@ function App() {
           <RutaPrivada><HistorialTareas /></RutaPrivada>
         } />
         <Route path="/crearTarea" element={
-          <RutaPrivada><CrearTarea /></RutaPrivada>
+          <RutaPrivada><CrearModificarTarea modo="crear" /></RutaPrivada>
+        } />
+        <Route path="/modificar/:id" element={
+          <RutaPrivada><CrearModificarTarea modo="modificar" /></RutaPrivada>
         } />
         <Route path="/Completadas" element={
           <RutaPrivada><TareasPage estadoFiltro="Completada" /></RutaPrivada>
         } />
-        <Route path="/modificar/:id" element={
-          <RutaPrivada><ModificarTarea /></RutaPrivada>
-        } />
+        
         <Route path="/login" element={
           <RutaPublica><LoginPage /></RutaPublica>
         } />
