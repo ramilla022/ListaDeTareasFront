@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Container, Typography, TextField, MenuItem, Button, Box } from '@mui/material';
+import { Container, Typography, Button, Box } from '@mui/material';
 import { useAuth } from '../../Context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import FormularioTarea from '../Componentes/FormTarea';
+import {FormularioTarea} from '../Componentes/FormTarea';
 import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;

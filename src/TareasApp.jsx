@@ -1,13 +1,15 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from './UI/Navbar';
-import TareasPage from './Tareas/Pages/TareasPage';
-import LoginPage from "./Tareas/Pages/LoginPage";
-import RegisterPage from "./Tareas/Pages/RegisterPage";
+import { Routes, Route } from "react-router-dom";
+import {Navbar} from './UI/Navbar';
+import {TareasPage} from './Tareas/Pages/TareasPage';
+import {LoginPage} from "./Tareas/Pages/LoginPage";
+import {RegisterPage} from "./Tareas/Pages/RegisterPage";
 import './Tareas.css'
-import { useAuth } from "./Context/AuthContext"; 
-import CrearTarea from "./Tareas/Pages/CrearTarea";
-import ModificarTarea from "./Tareas/Pages/ModificarTarea";
-import HistorialTareas from './Tareas/Pages/HistorialTareas'
+import {CrearTarea} from "./Tareas/Pages/CrearTarea";
+import {ModificarTarea} from "./Tareas/Pages/ModificarTarea";
+import HistorialTareas from './Tareas/Pages/HistorialTareas';
+import RutaPrivada from "./Routes/RutaPrivada";
+import RutaPublica from "./Routes/RutaPublica";
+import { useAuth } from "./Context/AuthContext";
 
 function App() {
   const { usuario } = useAuth();
@@ -17,27 +19,25 @@ function App() {
       {usuario && <Navbar />}
       <Routes>
         <Route path="/" element={
-          usuario ? <TareasPage estadoFiltro="Pendiente" /> : <Navigate to="/login" replace />
+          <RutaPrivada><TareasPage estadoFiltro="Pendiente" /></RutaPrivada>
         } />
         <Route path="/historialTareas" element={
-          usuario ? <HistorialTareas /> : <Navigate to="/login" replace />
+          <RutaPrivada><HistorialTareas /></RutaPrivada>
         } />
         <Route path="/crearTarea" element={
-          usuario ? <CrearTarea /> : <Navigate to="/login" replace />
+          <RutaPrivada><CrearTarea /></RutaPrivada>
         } />
         <Route path="/Completadas" element={
-          usuario ? <TareasPage estadoFiltro="Completada" /> : <Navigate to="/login" replace />
+          <RutaPrivada><TareasPage estadoFiltro="Completada" /></RutaPrivada>
         } />
         <Route path="/modificar/:id" element={
-          usuario ? <ModificarTarea /> : <Navigate to="/login" replace />
+          <RutaPrivada><ModificarTarea /></RutaPrivada>
         } />
-
         <Route path="/login" element={
-          !usuario ? <LoginPage /> : <Navigate to="/" replace />
+          <RutaPublica><LoginPage /></RutaPublica>
         } />
-
         <Route path="/register" element={
-          !usuario ? <RegisterPage /> : <Navigate to="/" replace />
+          <RutaPublica><RegisterPage /></RutaPublica>
         } />
       </Routes>
     </div>

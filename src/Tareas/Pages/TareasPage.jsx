@@ -15,7 +15,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import TareaComponente from '../Componentes/TareaComponente';
+import { TareaComponente } from '../Componentes/TareaComponente';
 import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;

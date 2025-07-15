@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import FormularioTarea from '../Componentes/FormTarea';
+import {FormularioTarea} from '../Componentes/FormTarea';
 import { Container, Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
 import { useTareas } from '../../Context/TareasContext';
