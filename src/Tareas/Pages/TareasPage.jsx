@@ -20,7 +20,9 @@ import { useTareas } from '../../Context/TareasContext';
 
 const API_URL = import.meta.env.VITE_PORT;
 
-export const TareasPage = ({ estadoFiltro = 'Pendiente' }) => {
+export const TareasPage = () => {
+
+  const [filtroEstado, setFiltroEstado] = useState('Todas');
   const [filtroTipo, setFiltroTipo] = useState('');
 const [filtroFecha, setFiltroFecha] = useState('');
   const { tareas, loading, actualizarTarea, eliminarTarea, agregarEventoHistorial } = useTareas();
@@ -72,17 +74,16 @@ const [filtroFecha, setFiltroFecha] = useState('');
   };
 
   const tareasFiltradas = tareas
-  .filter((t) => t.estado === estadoFiltro)
+  .filter((t) => {
+    if (filtroEstado === 'Todas') return true;
+    return t.estado === filtroEstado;
+  })
   .filter((t) => (filtroTipo ? t.tipo === filtroTipo : true))
-
   .sort((a, b) => {
-  if (filtroFecha === 'asc') {
-    return new Date(a.fechaCreacion) - new Date(b.fechaCreacion);
-  } else if (filtroFecha === 'desc') {
-    return new Date(b.fechaCreacion) - new Date(a.fechaCreacion);
-  }
-  return 0;
-});
+    if (filtroFecha === 'asc') return new Date(a.fechaCreacion) - new Date(b.fechaCreacion);
+    if (filtroFecha === 'desc') return new Date(b.fechaCreacion) - new Date(a.fechaCreacion);
+    return 0;
+  });
 
 if (loading) {
   return (
@@ -96,10 +97,25 @@ if (loading) {
   <Container maxWidth="lg" sx={{ position: 'relative', mt: 5 }}>
     <Paper elevation={3} sx={{ p: 4 }}>
   <Typography variant="h4" gutterBottom>
-    {estadoFiltro === 'Pendiente' ? 'Tareas Pendientes' : 'Tareas Completadas'}
+    Tareas {filtroEstado === 'Todas' ? '' : filtroEstado}
   </Typography>
 
   <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+
+<FormControl sx={{ minWidth: 150 }}>
+  <InputLabel id="filtro-estado-label">Estado</InputLabel>
+  <Select
+    labelId="filtro-estado-label"
+    value={filtroEstado}
+    label="Estado"
+    onChange={(e) => setFiltroEstado(e.target.value)}
+  >
+    <MenuItem value="Todas">Todas</MenuItem>
+    <MenuItem value="Pendiente">Pendientes</MenuItem>
+    <MenuItem value="Completada">Completadas</MenuItem>
+  </Select>
+</FormControl>
+
   <FormControl sx={{ minWidth: 150 }}>
     <InputLabel id="filtro-tipo-label">Filtrar por tipo</InputLabel>
     <Select
@@ -133,7 +149,7 @@ if (loading) {
 
   {tareasFiltradas.length === 0 ? (
     <Typography variant="body1">
-      No tienes tareas {estadoFiltro.toLowerCase()}.
+      No tienes tareas {filtroEstado === 'Todas' ? '' : filtroEstado.toLowerCase()}.
     </Typography>
   ) : (
     <div

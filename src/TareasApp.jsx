@@ -18,7 +18,7 @@ function App() {
       {usuario && <Navbar />}
       <Routes>
         <Route path="/" element={
-          <RutaPrivada><TareasPage estadoFiltro="Pendiente" /></RutaPrivada>
+          <RutaPrivada><TareasPage /></RutaPrivada>
         } />
         <Route path="/historialTareas" element={
           <RutaPrivada><HistorialTareas /></RutaPrivada>
@@ -28,9 +28,6 @@ function App() {
         } />
         <Route path="/modificar/:id" element={
           <RutaPrivada><CrearModificarTarea modo="modificar" /></RutaPrivada>
-        } />
-        <Route path="/Completadas" element={
-          <RutaPrivada><TareasPage estadoFiltro="Completada" /></RutaPrivada>
         } />
         
         <Route path="/login" element={

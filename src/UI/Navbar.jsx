@@ -33,10 +33,7 @@ return (
         </Typography>
 
         <Button color="inherit" startIcon={<ChecklistIcon />} component={NavLink} to="/">
-          Tareas Pendientes
-        </Button>
-        <Button color="inherit" startIcon={<DoneAllIcon />} component={NavLink} to="/completadas">
-          Tareas Completadas
+          Tareas
         </Button>
         <Button color="inherit" startIcon={<ChecklistIcon />} component={NavLink} to="/historialTareas">
           Historial de tareas
