@@ -9,6 +9,16 @@ export const TareaComponente = ({ tarea, onEliminar, onCompletar }) => {
   const navigate = useNavigate();
   const estaCompletada = tarea.estado === 'Completada';
 
+  const utcStringToLocal = (fechaStr) => {
+  return new Date(fechaStr.replace(' ', 'T') + 'Z');
+}
+
+const fechaLocalFormateada = utcStringToLocal(tarea.fechaCreacion).toLocaleString('es-AR', {
+  day: '2-digit', month: '2-digit', year: 'numeric',
+  hour: '2-digit', minute: '2-digit', second: '2-digit',
+  hour12: false
+});
+
   return (
     <Paper
     elevation={2}
@@ -38,7 +48,13 @@ export const TareaComponente = ({ tarea, onEliminar, onCompletar }) => {
             Tipo: {tarea.tipo || 'N/A'}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            Fecha: {tarea.fechaCreacion?.slice(0, 10) || 'N/A'}
+            Fecha: {tarea.fechaCreacion
+            ? utcStringToLocal(tarea.fechaCreacion).toLocaleString('es-AR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hour12: false
+            })
+            : 'N/A'}
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 'bold' }}>
             Estado: {tarea.estado}

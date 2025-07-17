@@ -36,8 +36,7 @@ export const CrearModificarTarea = ({ modo }) => {
       setEstado(tarea.estado);
       setFechaCreacion(tarea.fechaCreacion);
     } else {
-      setFechaCreacion(new Date().toISOString().slice(0, 10));
-    }
+      setFechaCreacion(new Date().toISOString().slice(0, 19).replace('T', ' '))}
   }, [esModificacion, tarea, navigate]);
 
   const handleSubmit = async (e) => {
