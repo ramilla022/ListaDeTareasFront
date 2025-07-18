@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "./AuthContext";
 
 const API_URL = import.meta.env.VITE_PORT;
-
 const TareasContext = createContext();
 
 export const TareasProvider = ({ children }) => {
@@ -11,6 +10,24 @@ export const TareasProvider = ({ children }) => {
   const [tareas, setTareas] = useState([]);
   const [historial, setHistorial] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const fetchHistorial = async (usuarioId) => {
+    try {
+      const res = await axios.get(`${API_URL}/api/tarea/historialUsuario/${usuarioId}`);
+      setHistorial(res.data);
+    } catch (err) {
+      console.error("Error al obtener historial:", err);
+    }
+  };
+
+  const fetchTareas = async (usuarioId) => {
+    try {
+      const res = await axios.get(`${API_URL}/api/tarea/tareasUsuario/${usuarioId}`);
+      setTareas(res.data);
+    } catch (err) {
+      console.error("Error al obtener tareas:", err);
+    }
+  };
 
   useEffect(() => {
     if (!usuario?.uid) {
@@ -20,58 +37,24 @@ export const TareasProvider = ({ children }) => {
       return;
     }
 
-    const historialLocal = localStorage.getItem(`historial_${usuario.uid}`);
-    if (historialLocal) {
-      setHistorial(JSON.parse(historialLocal));
-    } else {
-      setHistorial([]);
-    }
-
-    axios
-      .get(`${API_URL}/api/tarea/tareasUsuario/${usuario.uid}`)
-      .then((res) => {
-        setTareas(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error al obtener tareas:", err);
-        setLoading(false);
-      });
+    setLoading(true);
+    Promise.all([fetchTareas(usuario.uid), fetchHistorial(usuario.uid)])
+      .finally(() => setLoading(false));
   }, [usuario]);
 
-  useEffect(() => {
-    if (usuario?.uid) {
-      localStorage.setItem(`historial_${usuario.uid}`, JSON.stringify(historial));
-    }
-  }, [historial, usuario]);
-
-  const agregarEventoHistorial = (descripcion) => {
-    setHistorial((prev) => [
-      ...prev,
-      {
-        descripcion,
-        fecha: new Date().toISOString(),
-      },
-    ]);
-  };
-
   const agregarTarea = (tareaNueva) => {
-    setTareas((prev) => [...prev, tareaNueva]);
-    agregarEventoHistorial(`Tarea creada: "${tareaNueva.descripcion}"`);
+    setTareas(prev => [...prev, tareaNueva]);
+    fetchHistorial(usuario.uid);
   };
 
   const actualizarTarea = (tareaActualizada) => {
-    setTareas((prev) =>
-      prev.map((t) => (t.id === tareaActualizada.id ? tareaActualizada : t))
-    );
+    setTareas(prev => prev.map(t => (t.id === tareaActualizada.id ? tareaActualizada : t)));
+    fetchHistorial(usuario.uid);
   };
 
   const eliminarTarea = (id) => {
-    const tareaEliminada = tareas.find((t) => t.id === id);
-    setTareas((prev) => prev.filter((t) => t.id !== id));
-    if (tareaEliminada) {
-      agregarEventoHistorial(`Tarea eliminada: "${tareaEliminada.descripcion}"`);
-    }
+    setTareas(prev => prev.filter(t => t.id !== id));
+    fetchHistorial(usuario.uid);
   };
 
   return (
@@ -80,7 +63,6 @@ export const TareasProvider = ({ children }) => {
         tareas,
         setTareas,
         historial,
-        agregarEventoHistorial,
         setHistorial,
         loading,
         agregarTarea,

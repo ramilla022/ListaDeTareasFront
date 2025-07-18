@@ -66,8 +66,6 @@ const [filtroFecha, setFiltroFecha] = useState('');
       await axios.put(`${API_URL}/api/tarea/modificar/${id}`, tareaActualizada);
 
       actualizarTarea(tareaActualizada);
-      agregarEventoHistorial(`La tarea "${tareaActual.descripcion}" cambió a estado "${nuevoEstado}"`);
-
     } catch (error) {
       console.error('Error al completar tarea:', error);
     }
